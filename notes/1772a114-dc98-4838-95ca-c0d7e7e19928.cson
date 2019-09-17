@@ -1,0 +1,62 @@
+createdAt: "2019-09-17T18:42:36.253Z"
+updatedAt: "2019-09-17T22:53:19.107Z"
+type: "MARKDOWN_NOTE"
+folder: "def8b499f38c50a83da8"
+title: "CSC 474 Assignment 1"
+tags: []
+content: '''
+  # CSC 474 Assignment 1
+  
+  ---
+  ### QUESTION 1
+  #### Class
+  | Class   | Yes | No   |
+  | --------|:---:|:----:|
+  | 1st     | 203 | 122  |
+  | 2nd     | 118 | 167  |
+  | 3rd     | 178 | 528  |
+  | Crew    | 212 | 673  |
+  | *Total* |*711*|*1490*|
+  
+  ##### 1st
+  $$info([203, 122]) = entropy/bigg(/frac{203}{325}, /frac{122}{325}/bigg)=// = -/frac{203}{325}/cdot log/bigg(/frac{203}{325}/bigg)-/frac{122}{325}/cdot log/bigg(/frac{122}{325}/bigg) /approx 0.95472$$
+  
+  ##### 2nd
+  $$info([118, 167]) = entropy/bigg(/frac{118}{285}, /frac{167}{285}/bigg)=// = -/frac{118}{285}/cdot log/bigg(/frac{118}{285}/bigg)-/frac{167}{285}/cdot log/bigg(/frac{167}{285}/bigg) /approx 0.97858$$
+  
+  ##### 3rd
+  $$info([178, 528]) = entropy/bigg(/frac{178}{706}, /frac{528}{706}/bigg)=// = -/frac{178}{706}/cdot log/bigg(/frac{178}{706}/bigg)-/frac{528}{706}/cdot log/bigg(/frac{528}{706}/bigg) /approx 0.81463$$
+  
+  ##### Crew
+  $$info([212, 673]) = entropy/bigg(/frac{212}{885}, /frac{673}{885}/bigg)=// = -/frac{212}{885}/cdot log/bigg(/frac{212}{885}/bigg)-/frac{673}{885}/cdot log/bigg(/frac{673}{885}/bigg) /approx 0.79429$$
+  
+  ##### Average Weight Entropy (Expected)
+  $$info([203, 122], [118, 167], [178, 528], [212, 673]) = // = 0.95472/cdot/bigg(/frac{325}{2201}/bigg) + 0.97858/cdot/bigg(/frac{285}{2201}/bigg) + 0.81463/cdot/bigg(/frac{706}{2201}/bigg) + 0.79429/cdot/bigg(/frac{885}{2201}/bigg) /approx // /approx 0.84837$$
+  
+  #### Age
+  | Age     | Yes | No    |
+  | --------|:---:|:-----:|
+  | Adult   | 654 | 1438  |
+  | Child   | 57  | 52    |
+  | *Total* |*711*|*1490* |
+  ##### Adult
+  $$info([654, 1438]) = entropy/bigg(/frac{654}{2092}, /frac{1438}{2092}/bigg)=// = -/frac{654}{2092}/cdot log/bigg(/frac{654}{2092}/bigg)-/frac{1438}{2092}/cdot log/bigg(/frac{1438}{2092}/bigg) /approx 0.89617$$
+  
+  ##### Child
+  $$info([57, 52]) = entropy/bigg(/frac{57}{109}, /frac{52}{109}/bigg)=// = -/frac{57}{109}/cdot log/bigg(/frac{57}{109}/bigg)-/frac{52}{109}/cdot log/bigg(/frac{52}{109}/bigg) /approx 0.79429$$
+  
+  ##### Average Weight Entropy (Expected)
+  $$info([654, 1438], [57, 52]) = // = 0.89617/cdot/bigg(/frac{654}{2201}/bigg) + 0.79429/cdot/bigg(/frac{1438}{2201}/bigg) /approx // /approx 0.90124$$
+  
+  #### Sex
+  | Sex     | Yes | No    |
+  | --------|:---:|:-----:|
+  | Male    | 367 | 1364  |
+  | Female  | 344 | 126   |
+  | *Total* |*711*|*1490* |
+  
+  $$info([654, 1438]) = entropy/bigg(/frac{654}{2092}, /frac{1438}{2092}/bigg)=// = -/frac{654}{2092}/cdot log/bigg(/frac{654}{2092}/bigg)-/frac{1438}{2092}/cdot log/bigg(/frac{1438}{2092}/bigg) /approx 0.89617$$
+'''
+linesHighlighted: []
+isStarred: false
+isTrashed: false

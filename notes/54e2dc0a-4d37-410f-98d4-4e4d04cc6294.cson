@@ -1,5 +1,5 @@
 createdAt: "2019-09-17T18:42:36.253Z"
-updatedAt: "2019-09-17T23:04:03.949Z"
+updatedAt: "2019-09-17T23:06:45.787Z"
 type: "MARKDOWN_NOTE"
 folder: "def8b499f38c50a83da8"
 title: "CSC 474 Assignment 1"
@@ -16,7 +16,6 @@ content: '''
   | 2nd     | 118 | 167  |
   | 3rd     | 178 | 528  |
   | Crew    | 212 | 673  |
-  | *Total* |*711*|*1490*|
   
   ##### 1st
   $$info([203, 122]) = entropy\\bigg(\\frac{203}{325}, \\frac{122}{325}\\bigg)=\\\\ = -\\frac{203}{325}\\cdot log\\bigg(\\frac{203}{325}\\bigg)-\\frac{122}{325}\\cdot log\\bigg(\\frac{122}{325}\\bigg) \\approx 0.95472$$
@@ -38,7 +37,6 @@ content: '''
   | --------|:---:|:-----:|
   | Adult   | 654 | 1438  |
   | Child   | 57  | 52    |
-  | *Total* |*711*|*1490* |
   ##### Adult
   $$info([654, 1438]) = entropy\\bigg(\\frac{654}{2092}, \\frac{1438}{2092}\\bigg)=\\\\ = -\\frac{654}{2092}\\cdot log\\bigg(\\frac{654}{2092}\\bigg)-\\frac{1438}{2092}\\cdot log\\bigg(\\frac{1438}{2092}\\bigg) \\approx 0.89617$$
   
@@ -53,7 +51,6 @@ content: '''
   | --------|:---:|:-----:|
   | Male    | 367 | 1364  |
   | Female  | 344 | 126   |
-  | *Total* |*711*|*1490* |
   
   $$info([654, 1438]) = entropy\\bigg(\\frac{654}{2092}, \\frac{1438}{2092}\\bigg)=\\\\ = -\\frac{654}{2092}\\cdot log\\bigg(\\frac{654}{2092}\\bigg)-\\frac{1438}{2092}\\cdot log\\bigg(\\frac{1438}{2092}\\bigg) \\approx 0.89617$$
 '''

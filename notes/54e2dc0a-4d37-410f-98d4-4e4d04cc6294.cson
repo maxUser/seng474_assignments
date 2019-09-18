@@ -1,5 +1,5 @@
 createdAt: "2019-09-17T18:42:36.253Z"
-updatedAt: "2019-09-18T00:12:00.592Z"
+updatedAt: "2019-09-18T16:51:53.119Z"
 type: "MARKDOWN_NOTE"
 folder: "def8b499f38c50a83da8"
 title: "CSC 474 Assignment 1"
@@ -75,7 +75,7 @@ content: '''
   ##### Male - Crew
   $$info([192, 670]) = entropy\\bigg(\\frac{192}{862}, \\frac{670}{862}\\bigg)=\\\\ = -\\frac{192}{862}\\cdot log\\bigg(\\frac{192}{862}\\bigg)-\\frac{670}{862}\\cdot log\\bigg(\\frac{670}{862}\\bigg) \\approx 0.76513$$
   
-  ##### Average Weighted Entropy (Male --> Adult)
+  ##### Average Weighted Entropy (Male --> Class)
   $$info([62, 118], [25, 154], [88, 422], [192, 670]) = \\\\ = 0.92901\\cdot\\bigg(\\frac{180}{1731}\\bigg) + 0.58336\\cdot\\bigg(\\frac{179}{1731}\\bigg) + 0.66350\\cdot\\bigg(\\frac{510}{1731}\\bigg) + 0.76513\\cdot\\bigg(\\frac{862}{1731}\\bigg) \\approx \\\\ \\approx 0.73349$$
   
   Sex --> Male --> Age
@@ -88,7 +88,44 @@ content: '''
   ##### Average Weighted Entropy (Male --> Age)
   $$info([338, 1329], [29, 35]) = \\\\ = 0.72741\\cdot\\bigg(\\frac{1667}{1731}\\bigg) + 0.99365\\cdot\\bigg(\\frac{64}{1731}\\bigg) \\approx \\\\ \\approx 0.73725$$
   
-  #### Lowest Entropy = Male --> Adult
+  #### Lowest Entropy = Male --> Class
+  
+  Sex --> Female --> Class
+  ##### Female - 1st Class
+  $$info([141, 4]) = entropy\\bigg(\\frac{141}{145}, \\frac{4}{145}\\bigg)=\\\\ = -\\frac{141}{145}\\cdot log\\bigg(\\frac{141}{145}\\bigg)-\\frac{4}{145}\\cdot log\\bigg(\\frac{4}{145}\\bigg) \\approx 0.18214$$
+  
+  ##### Female - 2nd Class
+  $$info([93, 13]) = entropy\\bigg(\\frac{93}{106}, \\frac{13}{106}\\bigg)=\\\\ = -\\frac{93}{106}\\cdot log\\bigg(\\frac{93}{106}\\bigg)-\\frac{13}{106}\\cdot log\\bigg(\\frac{13}{106}\\bigg) \\approx 0.53691$$
+  
+  ##### Female - 3rd Class
+  $$info([90, 106]) = entropy\\bigg(\\frac{90}{196}, \\frac{106}{196}\\bigg)=\\\\ = -\\frac{90}{196}\\cdot log\\bigg(\\frac{90}{196}\\bigg)-\\frac{106}{196}\\cdot log\\bigg(\\frac{106}{196}\\bigg) \\approx 0.99519$$
+  
+  ##### Female - Crew
+  $$info([20, 3]) = entropy\\bigg(\\frac{20}{23}, \\frac{3}{23}\\bigg)=\\\\ = -\\frac{20}{23}\\cdot log\\bigg(\\frac{20}{23}\\bigg)-\\frac{3}{23}\\cdot log\\bigg(\\frac{3}{23}\\bigg) \\approx 0.55863$$
+  
+  ##### Average Weighted Entropy (Female --> Class)
+  $$info([141, 4], [93, 13], [90, 106], [20, 3]) = \\\\ = 0.18214\\cdot\\bigg(\\frac{145}{470}\\bigg) + 0.53691\\cdot\\bigg(\\frac{106}{470}\\bigg) + 0.99519\\cdot\\bigg(\\frac{196}{470}\\bigg) + 0.55863\\cdot\\bigg(\\frac{23}{470}\\bigg) \\approx \\\\ \\approx 0.61964$$
+  
+  Sex --> Female --> Age
+  ##### Female - Adult
+  $$info([316, 109]) = entropy\\bigg(\\frac{316}{425}, \\frac{109}{425}\\bigg)=\\\\ = -\\frac{316}{425}\\cdot log\\bigg(\\frac{316}{425}\\bigg)-\\frac{109}{425}\\cdot log\\bigg(\\frac{109}{425}\\bigg) \\approx 0.82137$$
+  
+  ##### Female - Child
+  $$info([28, 17]) = entropy\\bigg(\\frac{28}{45}, \\frac{17}{45}\\bigg)=\\\\ = -\\frac{28}{45}\\cdot log\\bigg(\\frac{28}{45}\\bigg)-\\frac{17}{45}\\cdot log\\bigg(\\frac{17}{45}\\bigg) \\approx 0.95646$$
+  
+  ##### Average Weighted Entropy (Female --> Age)
+  $$info([316, 109], [28, 17]) = \\\\ = 0.82137\\cdot\\bigg(\\frac{425}{470}\\bigg) + 0.95646\\cdot\\bigg(\\frac{45}{470}\\bigg) \\approx \\\\ \\approx 0.83430$$
+  
+  #### Lowest Entropy = Female --> Age
+  
+                        -----
+                        |SEX|
+                        -----
+                Male  /       \\ Female
+                     /         \\
+                  -------     -----
+                  |CLASS|     |AGE|
+                  -------     -----
 '''
 linesHighlighted: []
 isStarred: false

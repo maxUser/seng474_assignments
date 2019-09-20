@@ -1,5 +1,5 @@
 createdAt: "2019-09-17T18:42:36.253Z"
-updatedAt: "2019-09-18T16:51:53.119Z"
+updatedAt: "2019-09-20T17:05:11.035Z"
 type: "MARKDOWN_NOTE"
 folder: "def8b499f38c50a83da8"
 title: "CSC 474 Assignment 1"
@@ -116,16 +116,16 @@ content: '''
   ##### Average Weighted Entropy (Female --> Age)
   $$info([316, 109], [28, 17]) = \\\\ = 0.82137\\cdot\\bigg(\\frac{425}{470}\\bigg) + 0.95646\\cdot\\bigg(\\frac{45}{470}\\bigg) \\approx \\\\ \\approx 0.83430$$
   
-  #### Lowest Entropy = Female --> Age
+  #### Lowest Entropy = Female --> Class
   
                         -----
                         |SEX|
                         -----
                 Male  /       \\ Female
                      /         \\
-                  -------     -----
-                  |CLASS|     |AGE|
-                  -------     -----
+                  -------     -------
+                  |CLASS|     |CLASS|
+                  -------     -------
 '''
 linesHighlighted: []
 isStarred: false

@@ -172,7 +172,7 @@ So far we have, **If humidity = normal and ? then play = yes**
 
 ### QUESTION 3
 
-Evidence = E = 2nd, child, male 
+**Evidence = E = 2nd, child, male** 
 
 $$P(survive = yes | E) = \frac{\bigg(P(2nd | yes) \cdot P(child | yes) \cdot P(male | yes) \cdot P(yes) \bigg)}{P(E)} \\
 = \frac{\bigg(\frac{118}{711} \cdot \frac{57}{711} \cdot \frac{367}{711} \cdot \frac{711}{2201}\bigg)}{P(E)} \\
@@ -192,3 +192,24 @@ Therfore,
 $$P(survive = yes | E) = \frac{0.0022}{(0.0022 + 0.0024)} = 0.478 = 47.8\%$$
 
 $$P(survive = no | E) = \frac{0.0024}{(0.0022 + 0.0024)} = 0.522 = 52.2\%$$
+
+**Evidence = E = 2nd, adult, female** 
+
+$$P(survive = yes | E) = \frac{\bigg(P(2nd | yes) \cdot P(adult | yes) \cdot P(female | yes) \cdot P(yes) \bigg)}{P(E)} \\
+= \frac{\bigg(\frac{118}{711} \cdot \frac{654}{711} \cdot \frac{344}{711} \cdot \frac{711}{2201}\bigg)}{P(E)} \\
+= \frac{0.0239}{P(E)}$$
+
+$$P(survive = no | E) = \frac{\bigg(P(2nd | no) \cdot P(adult | no) \cdot P(female | no) \cdot P(no) \bigg)}{P(E)} \\
+= \frac{\bigg(\frac{167}{1490} \cdot \frac{1438}{1490} \cdot \frac{1490}{1490} \cdot \frac{1490}{2201}\bigg)}{P(E)} \\
+= \frac{0.0062}{P(E)}$$
+
+#### Normalization Constant
+$$P(survive = yes | E) + P(survive = no | E) = 1 \\
+= \frac{0.0239}{P(E)} + \frac{0.0062}{P(E)} = 1 \\
+P(E) = (0.0239 + 0.0062)$$
+
+Therfore,
+
+$$P(survive = yes | E) = \frac{0.0239}{(0.0239 + 0.0062)} = 0.794 = 79.4\%$$
+
+$$P(survive = no | E) = \frac{0.0062}{(0.0239 + 0.0062)} = 0.206 = 20.6\%$$

@@ -19,15 +19,20 @@ def main():
     wise_phrases = []
 
     for line in train_data:
-        vocab.extend(line.split()) # V <- ExtractVocabulary(D)
-        # print(line)
+
+        split_line = line.split()
+        for word in split_line:
+            if word not in vocab:
+                vocab.append(word) # V <- ExtractVocabulary(D)
+
         num_lines = num_lines + 1
         if count < 152:
             future_phrases.extend(line.rstrip('\n').split('\n'))
         elif count > 151:
             wise_phrases.extend(line.rstrip('\n').split('\n'))
         count = count + 1
-
+    print(vocab)
+    print(len(vocab))
     num_words = len(vocab) # N <- CountDocs(D)
 
     # label info
@@ -41,8 +46,8 @@ def main():
             num_future = num_future + 1
 
     for c in classes: # for each c in C
-        for i in range(10):
-            print('X', '\n')
+        # for i in range(10):
+        #     print('X', '\n')
         # do Nc <- CountDocsInClass(D, c)
         Nc = 0 # number of phrases per class
         if c == 0:
@@ -64,18 +69,6 @@ def main():
             # Tct = number of occurrences of t in training docs from class c
             if term in textc:
                 Tct = Tct + 1
-        print(len(textc))
-        print(Tct)
-        for term in vocab: # for term in vocab: # for each t in V
-            # do condprob[t][c] <- (Tct + 1) / ()
-
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":

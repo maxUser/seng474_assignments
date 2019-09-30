@@ -80,19 +80,29 @@ def concatenateTextOfAllDocsInClass(D, c):
     for d in docs:
         for word in d.split():
             words.append(word)
-
     return words
 
 
 def countTokensOfTerm(textc, t):
-    '''Givem a term, count how many times it appears in the text'''
+    '''Given a term, count how many times it appears in the text'''
     return textc.count(t)
 
-def formula(Tct, t):
+def formula(Tct, t, lenTextc, vocabSize):
     '''TODO IMPLEMENT THE FORMULA'''
+    # it CANNOT be this simple
+    numerator = Tct+1
+    denominator = lenTextc+vocabSize
+    condprob = numerator/denominator
+    
+    return condprob
+
     # temp
-    import random
-    return random.randint(0,5)
+    # import random
+    # return random.randint(0,5)
+
+def extractTokensFromDoc(vocab, doc):
+
+    return 0
 
 
 def trainMultinomialNB(C, D):
@@ -117,14 +127,20 @@ def trainMultinomialNB(C, D):
 
         for t in V:
             Tct = countTokensOfTerm(textc, t)
-            condprob[t][c] = formula(Tct, t)    # todo
+            condprob[t][c] = formula(Tct, t, len(textc), len(V))    # todo
 
     return V, prior, condprob
 
 
 def applyMultinomialNB(C, V, prior, condprob, d):
     # I don't have the patiene for this right now
+    W = extractTokensFromDoc(V, d)
+
+    for c in C:
+
+
     return 0
+
 
 
 if __name__ == '__main__':

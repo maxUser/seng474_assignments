@@ -129,10 +129,20 @@ def trainMultinomialNB(C, D):
     return V, prior, condprob
 
 
-def applyMultinomialNB(C, V, prior, condprob, d):
+def compareResults(results, expected):
+    total = [True if result == expect else False for result, expect in zip(results, expected)]
+    # get total instances of a match
+    matching = 0
+    for bool in total:
+        if bool:
+            matching += 1
 
+    # return accuracy in percent
+    return (float(matching) / float(len(total))) * 100
+
+
+def applyMultinomialNB(C, V, prior, condprob, d):
     W = extractTokensFromDoc(V, d)
-    # print(W)
     score = [None, None]
     for c in C:
         score[int(c)] = math.log(prior[int(c)], 2)
@@ -140,8 +150,8 @@ def applyMultinomialNB(C, V, prior, condprob, d):
         for t in W:
             score[int(c)] += math.log(condprob[t][c])
     # the score corresponds to the class which the doc is more likely to be in
-    # print(score)
-    return -score[prior.index(max(prior))]
+    # cast index to string for final comparison
+    return str(score.index(max(score)))
 
 
 if __name__ == '__main__':
@@ -151,7 +161,9 @@ if __name__ == '__main__':
     C = getAllClasses(labels)
 
     V, prior, condprob = trainMultinomialNB(C, D)
+    result = [applyMultinomialNB(C, V, prior, condprob, d['doc']) for d in D]
 
-    for d in D:
-        output = applyMultinomialNB(C, V, prior, condprob, d['doc'])
-        print(output)
+    # turn labels into list for final comparison
+    accuracy = compareResults(result, fileToList(labels))
+
+    print('Accurary: {}%'.format(accuracy))

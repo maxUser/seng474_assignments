@@ -96,8 +96,8 @@ def formula(Tct, t, textc, V):
     return condprob
 
 
-def extractTokensFromDoc(vocab, doc):
-
+def extractTokensFromDoc(V, d):
+    
     return 0
 
 

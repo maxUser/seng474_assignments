@@ -88,8 +88,8 @@ def countTokensOfTerm(textc, t):
     return textc.count(t)
 
 
-def formula(Tct, t, textc, V):
-    '''Some formula from the notes, implemented'''
+def formula(Tct, textc, V):
+    '''Conditional probability + LaPlace smoothing'''
     numerator = Tct + 1
     denominator = len(textc) + len(V)
     condprob = float(numerator) / float(denominator)
@@ -98,6 +98,7 @@ def formula(Tct, t, textc, V):
 
 
 def extractTokensFromDoc(V, d):
+    # Extract words common to Vagina and dick im 12 btw hahha
     return [word for word in d.split() if word in V]
 
 
@@ -123,23 +124,24 @@ def trainMultinomialNB(C, D):
 
         for t in V:
             Tct = countTokensOfTerm(textc, t)
-            condprob[t][c] = formula(Tct, t, textc, V)
+            condprob[t][c] = formula(Tct, textc, V)
 
     return V, prior, condprob
 
 
 def applyMultinomialNB(C, V, prior, condprob, d):
-    # I don't have the patiene for this right now
-    W = extractTokensFromDoc(V, d)
 
+    W = extractTokensFromDoc(V, d)
+    # print(W)
     score = [None, None]
     for c in C:
         score[int(c)] = math.log(prior[int(c)], 2)
 
         for t in W:
             score[int(c)] += math.log(condprob[t][c])
-
-    return score[prior.index(max(prior))]
+    # the score corresponds to the class which the doc is more likely to be in
+    # print(score)
+    return -score[prior.index(max(prior))]
 
 
 if __name__ == '__main__':
@@ -148,9 +150,8 @@ if __name__ == '__main__':
     D = mapAllDocs(data, labels)
     C = getAllClasses(labels)
 
-    # run the first part of the algo
     V, prior, condprob = trainMultinomialNB(C, D)
 
-    d = 'tomorrow will be the old yesterday'
-    output = applyMultinomialNB(C, V, prior, condprob, d)
-    print(output)
+    for d in D:
+        output = applyMultinomialNB(C, V, prior, condprob, d['doc'])
+        print(output)

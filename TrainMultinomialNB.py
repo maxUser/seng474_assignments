@@ -98,7 +98,7 @@ def formula(Tct, textc, V):
 
 
 def extractTokensFromDoc(V, d):
-    # Extract words common to Vagina and dick im 12 btw hahha
+    '''Extract tokens matching the document'''
     return [word for word in d.split() if word in V]
 
 
@@ -130,6 +130,7 @@ def trainMultinomialNB(C, D):
 
 
 def compareResults(results, expected):
+    '''Given 2 lists of booleans return the percent of matching items'''
     total = [True if result == expect else False for result, expect in zip(results, expected)]
     # get total instances of a match
     matching = 0
@@ -142,6 +143,7 @@ def compareResults(results, expected):
 
 
 def applyMultinomialNB(C, V, prior, condprob, d):
+    '''Apply the trained values to the documents'''
     W = extractTokensFromDoc(V, d)
     score = [None, None]
     for c in C:
@@ -160,10 +162,14 @@ if __name__ == '__main__':
     D = mapAllDocs(data, labels)
     C = getAllClasses(labels)
 
+    # run training
     V, prior, condprob = trainMultinomialNB(C, D)
+
+    # apply MNB and store result
     result = [applyMultinomialNB(C, V, prior, condprob, d['doc']) for d in D]
 
     # turn labels into list for final comparison
     accuracy = compareResults(result, fileToList(labels))
 
+    # final output
     print('Accurary: {}%'.format(accuracy))

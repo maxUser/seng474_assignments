@@ -97,8 +97,7 @@ def formula(Tct, t, textc, V):
 
 
 def extractTokensFromDoc(V, d):
-    
-    return 0
+    return [word for word in d.split()]
 
 
 def trainMultinomialNB(C, D):
@@ -131,7 +130,7 @@ def trainMultinomialNB(C, D):
 def applyMultinomialNB(C, V, prior, condprob, d):
     # I don't have the patiene for this right now
     W = extractTokensFromDoc(V, d)
-
+    print(W)
     # for c in C:
 
 
@@ -149,4 +148,4 @@ if __name__ == '__main__':
     V, prior, condprob = trainMultinomialNB(C, D)
 
     for d in D:
-        applyMultinomialNB(C, V, prior, condprob, d)
+        applyMultinomialNB(C, V, prior, condprob, d['doc'])

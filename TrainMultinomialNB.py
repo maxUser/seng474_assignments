@@ -74,12 +74,11 @@ def concatenateTextOfAllDocsInClass(D, c):
     filtered = filterOnClass(D, c)
     docs = [item['doc'] for item in filtered]
 
-    # @Maxi do we need to take just the unique words from here?
-    # Based on the algo I don't think so but it wouldn't be hard to change if we do.
     words = []
     for d in docs:
         for word in d.split():
             words.append(word)
+
     return words
 
 
@@ -87,18 +86,15 @@ def countTokensOfTerm(textc, t):
     '''Given a term, count how many times it appears in the text'''
     return textc.count(t)
 
-def formula(Tct, t, lenTextc, vocabSize):
-    '''TODO IMPLEMENT THE FORMULA'''
-    # it CANNOT be this simple
-    numerator = Tct+1
-    denominator = lenTextc+vocabSize
-    condprob = numerator/denominator
-    
+
+def formula(Tct, t, textc, V):
+    '''Some formula from the notes, implemented'''
+    numerator = Tct + 1
+    denominator = len(textc) + len(V)
+    condprob = float(numerator) / float(denominator)
+
     return condprob
 
-    # temp
-    # import random
-    # return random.randint(0,5)
 
 def extractTokensFromDoc(vocab, doc):
 
@@ -127,7 +123,7 @@ def trainMultinomialNB(C, D):
 
         for t in V:
             Tct = countTokensOfTerm(textc, t)
-            condprob[t][c] = formula(Tct, t, len(textc), len(V))    # todo
+            condprob[t][c] = formula(Tct, t, textc, V)
 
     return V, prior, condprob
 
@@ -136,7 +132,7 @@ def applyMultinomialNB(C, V, prior, condprob, d):
     # I don't have the patiene for this right now
     W = extractTokensFromDoc(V, d)
 
-    for c in C:
+    # for c in C:
 
 
     return 0
@@ -149,10 +145,8 @@ if __name__ == '__main__':
     D = mapAllDocs(data, labels)
     C = getAllClasses(labels)
 
-
     # run the first part of the algo
     V, prior, condprob = trainMultinomialNB(C, D)
 
-    print('V: {}'.format(V))
-    print('prior: {}'.format(prior))
-    print('condprob: {}'.format(condprob))
+    for d in D:
+        applyMultinomialNB(C, V, prior, condprob, d)

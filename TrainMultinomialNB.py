@@ -161,15 +161,24 @@ if __name__ == '__main__':
     data, labels = getArgs()
     D = mapAllDocs(data, labels)
     C = getAllClasses(labels)
+    result = []
+    accuracy = -1
 
     # run training
     V, prior, condprob = trainMultinomialNB(C, D)
 
-    # apply MNB and store result
-    result = [applyMultinomialNB(C, V, prior, condprob, d['doc']) for d in D]
+    testOrTrain = input('test or train: ')
 
-    # turn labels into list for final comparison
-    accuracy = compareResults(result, fileToList(labels))
+    if testOrTrain == 'train':
+        # apply MNB and store result
+        result = [applyMultinomialNB(C, V, prior, condprob, d['doc']) for d in D]
+        # turn labels into list for final comparison
+        accuracy = compareResults(result, fileToList(labels))
+    elif testOrTrain == 'test':
+        D = mapAllDocs('testdata.txt', 'testLabels.txt')
+        C = getAllClasses('testLabels.txt')
+        result = [applyMultinomialNB(C, V, prior, condprob, d['doc']) for d in D]
+        accuracy = compareResults(result, fileToList('testLabels.txt'))
 
     # final output
-    print('Accurary: {}%'.format(accuracy))
+    print('Accuracy: {}%'.format(accuracy))

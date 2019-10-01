@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+import math
 
 
 def getArgs():
@@ -97,7 +98,7 @@ def formula(Tct, t, textc, V):
 
 
 def extractTokensFromDoc(V, d):
-    return [word for word in d.split()]
+    return [word for word in d.split() if word in V]
 
 
 def trainMultinomialNB(C, D):
@@ -130,12 +131,15 @@ def trainMultinomialNB(C, D):
 def applyMultinomialNB(C, V, prior, condprob, d):
     # I don't have the patiene for this right now
     W = extractTokensFromDoc(V, d)
-    print(W)
-    # for c in C:
 
+    score = [None, None]
+    for c in C:
+        score[int(c)] = math.log(prior[int(c)], 2)
 
-    return 0
+        for t in W:
+            score[int(c)] += math.log(condprob[t][c])
 
+    return score[prior.index(max(prior))]
 
 
 if __name__ == '__main__':
@@ -147,5 +151,6 @@ if __name__ == '__main__':
     # run the first part of the algo
     V, prior, condprob = trainMultinomialNB(C, D)
 
-    for d in D:
-        applyMultinomialNB(C, V, prior, condprob, d['doc'])
+    d = 'tomorrow will be the old yesterday'
+    output = applyMultinomialNB(C, V, prior, condprob, d)
+    print(output)

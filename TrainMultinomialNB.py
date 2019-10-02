@@ -1,3 +1,11 @@
+# Assignment 1: Q4
+#
+# Max Kasprzik V00722495
+# Nik Rados    V00801209
+#
+# How to run:
+#   python TrainMultinomialNB.py --data-train ../fortune_cookies/traindata.txt --labels-train ../fortune_cookies/trainlabels.txt --data-test ../fortune_cookies/testdata.txt --labels-test ../fortune_cookies/testlabels.txt 
+
 from argparse import ArgumentParser
 import math
 
@@ -5,10 +13,12 @@ import math
 def getArgs():
     '''Get the filepaths needed to run algo'''
     parser = ArgumentParser()
-    parser.add_argument('--data', help='text file containing strings')
-    parser.add_argument('--labels', help='text file containing classes')
+    parser.add_argument('--data-train', help='text file containing training docs')
+    parser.add_argument('--labels-train', help='text file containing training classes')
+    parser.add_argument('--data-test', help='text file containing test docs')
+    parser.add_argument('--labels-test', help='text file containing test classes')
     args = parser.parse_args()
-    return args.data, args.labels
+    return args.data_train, args.labels_train, args.data_test, args.labels_test
 
 
 def fileToList(filename):
@@ -158,27 +168,28 @@ def applyMultinomialNB(C, V, prior, condprob, d):
 
 if __name__ == '__main__':
     # We need to do a little prep before running the algo
-    data, labels = getArgs()
-    D = mapAllDocs(data, labels)
-    C = getAllClasses(labels)
-    result = []
-    accuracy = -1
+    data_train, labels_train, data_test, labels_test = getArgs()
+
+    # Set up training vars
+    D_train = mapAllDocs(data_train, labels_train)
+    C_train = getAllClasses(labels_train)
 
     # run training
-    V, prior, condprob = trainMultinomialNB(C, D)
+    V, prior, condprob = trainMultinomialNB(C_train, D_train)
 
-    testOrTrain = input('test or train: ')
+    # apply MNB and store result
+    result_train = [applyMultinomialNB(C_train, V, prior, condprob, d['doc']) for d in D_train]
+    # turn labels into list for final comparison
+    accuracy_train = compareResults(result_train, fileToList(labels_train))
 
-    if testOrTrain == 'train':
-        # apply MNB and store result
-        result = [applyMultinomialNB(C, V, prior, condprob, d['doc']) for d in D]
-        # turn labels into list for final comparison
-        accuracy = compareResults(result, fileToList(labels))
-    elif testOrTrain == 'test':
-        D = mapAllDocs('testdata.txt', 'testLabels.txt')
-        C = getAllClasses('testLabels.txt')
-        result = [applyMultinomialNB(C, V, prior, condprob, d['doc']) for d in D]
-        accuracy = compareResults(result, fileToList('testLabels.txt'))
+    # output training accuracy
+    print('Accuracy of Training: {}%'.format(accuracy_train))
 
-    # final output
-    print('Accuracy: {}%'.format(accuracy))
+    # Set up test vars
+    D_test = mapAllDocs(data_test, labels_test)
+    C_test = getAllClasses(labels_test)
+    result_test = [applyMultinomialNB(C_test, V, prior, condprob, d['doc']) for d in D_test]
+    accuracy_test = compareResults(result_test, fileToList(labels_test))
+
+    # output test accuracty
+    print('Accuracy of Test: {}%'.format(accuracy_test))

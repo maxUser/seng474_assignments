@@ -1,0 +1,11 @@
+Assignment 1: Q4
+
+Max Kasprzik V00722495
+Nik Rados    V00801209
+
+1. Accuracy: 96.58385093167702%
+	-For training: used traindata.txt and trainlabels.txt
+	-For testing: used traindata.txt and trainlabels.txt
+2. Accuracy: 81.1881188118812%
+	-For training: used traindata.txt and trainlabels.txt
+	-For testing: used testdata.txt and testlabels.txt

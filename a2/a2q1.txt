@@ -1,0 +1,108 @@
+# CSC 474 Assignment 2
+---
+### QUESTION 1
+GPA | GRE | Dummy | y |
+--- | --- | --- | --- |
+1 | 1 | 1 | 1 |
+0.9 | 1 | 1 | 1 |
+0.9 | 0.875 | 1 | 1 |
+0.7 | 0.75 | 1 | -1 |
+0.6 | 0.875 | 1 | -1 |
+
+$$\vec{w} = \begin{bmatrix} 0 & 0 & 0\end{bmatrix}$$
+$$k = 2$$
+
+$$\theta = e^{y(w_1GPA+w_2GRE+bDummy)}\\
+= e^{1(0*1+0*1+0*1)}\\
+= e^0\\
+= 1$$
+
+GPA
+$$\frac{yGPA}{1+\theta}$$
+1. $$GPA = 1$$
+$$= \frac{1*1}{1+1}\\
+= \frac{1}{2} \\
+= 0.5$$
+2. $$GPA = 0.9$$
+$$= \frac{1*0.9}{1+1}\\
+= \frac{0.9}{2} \\
+= 0.45$$
+3. $$GPA = 0.9$$
+$$= \frac{1*0.9}{1+1}\\
+= \frac{0.9}{2} \\
+= 0.45$$
+4. $$GPA = 0.7$$
+$$= \frac{-1*0.7}{1+1}\\
+= \frac{-0.7}{2} \\
+= -0.35$$
+5. $$GPA = 0.6$$
+$$= \frac{-1*0.6}{1+1}\\
+= \frac{-0.6}{2} \\
+= -0.3$$
+
+Compute Avg for GPA
+$$avg = \frac{0.5+0.45+0.45-0.35-0.3}{5} \\
+= \frac{0.75}{5} \\
+= 0.15$$
+
+GRE
+$$\frac{yGPA}{1+\theta}$$
+1. $$GRE = 1$$
+$$= \frac{1*1}{1+1}\\
+= \frac{1}{2} \\
+= 0.5$$
+2. $$GRE = 1$$
+$$= \frac{1*1}{1+1}\\
+= \frac{1}{2} \\
+= 0.5$$
+3. $$GRE = 0.875$$
+$$= \frac{1*0.875}{1+1}\\
+= \frac{0.875}{2} \\
+= 0.4375$$
+4. $$GRE = 0.75$$
+$$= \frac{-1*0.75}{1+1}\\
+= \frac{-0.75}{2} \\
+= -0.375$$
+5. $$GRE = 0.875$$
+$$= \frac{-1*0.875}{1+1}\\
+= \frac{-0.875}{2} \\
+= -0.4375$$
+
+Compute Avg for GRE
+$$avg = \frac{0.5+0.5+0.4375-0.375-0.4375}{5} \\
+= \frac{0.625}{5} \\
+= 0.125$$
+
+Dummy
+$$\frac{yDummy}{1+\theta}$$
+1. $$Dummy = 1$$
+$$= \frac{1*1}{1+1}\\
+= \frac{1}{2} \\
+= 0.5$$
+2. $$Dummy = 1$$
+$$= \frac{1*1}{1+1}\\
+= \frac{1}{2} \\
+= 0.5$$
+3. $$Dummy = 1$$
+$$= \frac{1*1}{1+1}\\
+= \frac{1}{2} \\
+= 0.5$$
+4. $$Dummy = 1$$
+$$= \frac{-1*1}{1+1}\\
+= \frac{-1}{2} \\
+= -0.5$$
+5. $$Dummy = 1$$
+$$= \frac{-1*1}{1+1}\\
+= \frac{-1}{2} \\
+= 0.5$$
+
+Compute Avg for Dummy
+$$avg = \frac{0.5+0.5+0.5-0.5-0.5}{5} \\
+= \frac{0.5}{5} \\
+= 0.1$$
+
+Update weight vector
+$$\vec{w} \leftarrow w + k\Delta_E(w) \\
+\vec{w} \leftarrow \begin{bmatrix} 0 & 0 & 0\end{bmatrix} + 2\begin{bmatrix} 0.15 & 0.125 & 0.1\end{bmatrix} \\
+\vec{w} \leftarrow \begin{bmatrix} 0 & 0 & 0\end{bmatrix} + \begin{bmatrix} 0.3 & 0.25 & 0.2\end{bmatrix} \\
+\vec{w} \leftarrow \begin{bmatrix} 0.3 & 0.25 & 0.2\end{bmatrix}$$

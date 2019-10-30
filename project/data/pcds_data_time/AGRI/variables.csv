@@ -1,0 +1,9 @@
+variables
+variable, standard_name, cell_method, unit
+Prec, lwe_thickness_of_precipitation_amount, time: sum, mm
+TMin, air_temperature, time: minimum, celsius
+TMax, air_temperature, time: maximum, celsius
+Humidity, relative_humidity, time: mean, %
+Pressure, air_pressure, time: mean, None
+Wind, wind_speed, time: mean, m s-1
+Solar, solar_irradiance, time: sum, MJ m-2 d-1

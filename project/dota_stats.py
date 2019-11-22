@@ -7,15 +7,23 @@ import time
 Descriptions of results:
     http://sharonkuo.me/dota2/matchdetails.html
 
+API calls:
+    https://dev.dota2.com/showthread.php?t=58317
 '''
 
+def get_heroes(key, id):
+    data_request = requests.get('http://api.steampowered.com/IEconDOTA2_570/GetHeroes/v1/?key={}'.format(key))
+    hero_dict = data_request.json()
+    for hero in hero_dict['result']['heroes']:
+        if hero['id'] == id:
+            print(hero['name'])
+
+
 def read_file():
-    with open('match_data.json', 'r') as file:
+    with open('all_data.json', 'r') as file:
         d = json.load(file)
     print(len(d))
-    with open('match_data2.json', 'r') as file:
-        d = json.load(file)
-    print(len(d))
+
 
 def set_up(n, key, match_id, invalid_ids):
     '''
@@ -58,7 +66,7 @@ def get_match(key, match_id, count):
     '''
     print('Response {}: {}'.format(count, data_request))
     # match_data = json.loads(data_request.text)
-    
+
     match_data = data_request.json()
 
     '''
@@ -71,8 +79,6 @@ def get_match(key, match_id, count):
         with open('match_data3.json', 'a') as file:
             file.write(', ')
             json.dump(match_data, file, indent=4, sort_keys=True)
-
-
 
 def get_match_data(key):
     match_data = {}
@@ -136,29 +142,12 @@ if __name__ == '__main__':
     match_id = 5000009000
     invalid_ids = 0
     loops = 5000
+    hero_id = 
 
     # get_match_data(args.key)
 
-    set_up(loops, args.key, match_id, invalid_ids)
+    # set_up(loops, args.key, match_id, invalid_ids)
 
     # read_file()
-'''
-Random Error:
-Traceback (most recent call last):
-  File "dota_stats.py", line 140, in <module>
-    set_up(loops, args.key, match_id, invalid_ids)
-  File "dota_stats.py", line 27, in set_up
-    result = get_match(key, match_id, count)
-  File "dota_stats.py", line 59, in get_match
-    match_data = data_request.json()
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages/requests/models.py", line 897, in json
-    return complexjson.loads(self.text, **kwargs)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/__init__.py", line 348, in loads
-    return _default_decoder.decode(s)
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 337, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/json/decoder.py", line 355, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
 
-'''
+    get_heroes(args.key, hero_id)

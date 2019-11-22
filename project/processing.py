@@ -90,7 +90,63 @@ def filter_by_hero(data, hero_id):
 
 
 def extract_duration_data(data):
-    dur_data = {}
+    '''Extract data based on game duration.
+
+       Match duration is stored in secondsso we define the categories as the
+       following:
+        early      --> 0-19 mins  (0-1199 sec)
+        mid        --> 20-39 mins (1200-2399 sec)
+        late       --> 40-59 mins (2400-3599 sec)
+        ultra-late --> 60+ mins   (3600+ sec)
+    '''
+    early = []
+    mid = []
+    late = []
+    ultra_late = []
+
+    for match in data:
+        if match['result']['duration'] <= 1199:
+            early.append(match)
+        elif match['result']['duration'] <= 2399:
+            mid.append(match)
+        elif match['result']['duration'] <= 3599:
+            late.append(match)
+        else:
+            ultra_late.append(match)
+
+    # check the output
+    print('Early matches: {}'.format(len(early)))
+    print('Mid matches: {}'.format(len(mid)))
+    print('Late matches: {}'.format(len(late)))
+    print('Ultra Late matches: {}'.format(len(ultra_late)))
+
+    return early, mid, late, ultra_late
+
+
+def did_hero_win_match(match, hero_id):
+    '''Take a hero and a match and determine victory
+
+       Here, player_slot tells us which team the player is on.  0-4 is Radiant,
+       128-132 is Dire.
+    '''
+    player_slot = None
+    for player in match['result']['players']:
+        if player['hero_id'] == hero_id:
+            player_slot = player['player_slot']
+
+    if not player_slot:
+        raise('ERROR: Hero was not in the match')
+
+    if player_slot <= 4:
+        print(match['result'].keys())
+        return match['result']['radiant_win']
+    else:
+        return not match['result']['radiant_win']
+
+
+def get_win_percent(total_matches, wins):
+    return (wins / total_matches) * 100
+
 
 if __name__ == '__main__':
     data = read_file('all_data.json')
@@ -104,5 +160,18 @@ if __name__ == '__main__':
 
     # highest_player_stat(data, 'last_hits')
 
-    some_hero = filter_by_hero(data, 0)
-    print(len(some_hero))
+    selected_hero = 1
+    hero_data = filter_by_hero(data, selected_hero)
+    print('Total matches for hero: {}'.format(len(hero_data)))
+
+    early, mid, late, ultra_late = extract_duration_data(hero_data)
+
+    early_wins = [match for match in early if did_hero_win_match(match, selected_hero)]
+    mid_wins = [match for match in mid if did_hero_win_match(match, selected_hero)]
+    late_wins = [match for match in late if did_hero_win_match(match, selected_hero)]
+    ultra_late_wins = [match for match in ultra_late if did_hero_win_match(match, selected_hero)]
+
+    print('Early win %: {}'.format(len(early), len(early_wins)))
+    print('Mid win %: {}'.format(len(mid), len(mid_wins)))
+    print('Late win %: {}'.format(len(late), len(late_wins)))
+    print('Ultra Late win %: {}'.format(len(ultra_late), len(ultra_late_wins)))

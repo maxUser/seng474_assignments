@@ -95,7 +95,8 @@ def highest_player_stat(data, stat):
 def filter_by_hero(data, hero_id):
     '''Filter out matches where selected hero did not appear'''
     return [match for match in data
-            for player in match['result']['players'] if player['hero_id'] == hero_id]
+            for player in match['result']['players']
+            if player['hero_id'] == hero_id]
 
 
 def extract_duration_data(data):

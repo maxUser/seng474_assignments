@@ -1,12 +1,17 @@
 import json
 
+
 def read_file(filename):
-    d = None
+    '''Read in json data file'''
+    data = None
     with open(filename, 'r') as file:
-        d = json.load(file)
-    return d
+        data = json.load(file)
+
+    return data
+
 
 def radiant_wins(data):
+    '''Given dataset, determine radiant win statistics'''
     win_count = 0
     loss_count = 0
     error_count = 0
@@ -20,7 +25,6 @@ def radiant_wins(data):
             error_count += 1
             pass
 
-
     print('Wins: {}'.format(win_count))
     print('Losses: {}'.format(loss_count))
     print('Errors: {}'.format(error_count))
@@ -28,10 +32,12 @@ def radiant_wins(data):
 
 
 def filter_by_gamemode(data, mode):
+    '''Given dataset, filter on game mode'''
     return [match for match in data if match['result']['game_mode'] == mode]
 
 
 def game_mode_stats(data):
+    '''Game mode distribution'''
     mode_stats = {
         0: {'name': 'Unknown', 'count': 0},
         1: {'name': 'All pick', 'count': 0},
@@ -67,10 +73,12 @@ def game_mode_stats(data):
     for stats in mode_stats.values():
         print('{}: {}'.format(stats['name'], stats['count']))
         total += stats['count']
+
     print('total {}'.format(total))
 
 
 def highest_player_stat(data, stat):
+    '''Calculate the maximum player stat'''
     highest = 0
     mode = None
 
@@ -85,6 +93,7 @@ def highest_player_stat(data, stat):
 
 
 def filter_by_hero(data, hero_id):
+    '''Filter out matches where selected hero did not appear'''
     return [match for match in data
             for player in match['result']['players'] if player['hero_id'] == hero_id]
 
@@ -134,33 +143,41 @@ def did_hero_win_match(match, hero_id):
         if player['hero_id'] == hero_id:
             player_slot = player['player_slot']
 
-    if not player_slot:
-        raise('ERROR: Hero was not in the match')
+    if player_slot == None:
+        print('hero {} not in match {}'.format(hero_id, match['result']['match_id']))
 
-    if player_slot <= 4:
-        print(match['result'].keys())
-        return match['result']['radiant_win']
-    else:
-        return not match['result']['radiant_win']
+    try:
+        if player_slot <= 4:
+            return match['result']['radiant_win']
+        else:
+            return not match['result']['radiant_win']
+    except:
+        print('Match_id: {}, does not have \'radiant_win\''.format(match['result']['match_id']))
+        pass
 
 
 def get_win_percent(total_matches, wins):
-    return (wins / total_matches) * 100
+    '''Calculate win percentage'''
+    return (float(wins) / float(total_matches)) * 100
+
+
+def filter_bad_data(data):
+    '''Filter out data with no win condition'''
+    return [match for match in data if 'radiant_win' in match['result'].keys()]
 
 
 if __name__ == '__main__':
-    data = read_file('all_data.json')
-    # print(type(data[0]['result']['game_mode']))
+    # Collect data
+    raw_data = read_file('all_data.json')
 
-    # radiant_wins(data)
-    # captains_mode_data = filter_by_gamemode(data, 1)
-    # radiant_wins(captains_mode_data)
+    # Filter out bad data
+    data = filter_bad_data(raw_data)
 
+    # Check game mode distribution
     # game_mode_stats(data)
 
-    # highest_player_stat(data, 'last_hits')
-
-    selected_hero = 1
+    # Calculate hero win percentage based on match duration
+    selected_hero = 42
     hero_data = filter_by_hero(data, selected_hero)
     print('Total matches for hero: {}'.format(len(hero_data)))
 
@@ -171,7 +188,7 @@ if __name__ == '__main__':
     late_wins = [match for match in late if did_hero_win_match(match, selected_hero)]
     ultra_late_wins = [match for match in ultra_late if did_hero_win_match(match, selected_hero)]
 
-    print('Early win %: {}'.format(len(early), len(early_wins)))
-    print('Mid win %: {}'.format(len(mid), len(mid_wins)))
-    print('Late win %: {}'.format(len(late), len(late_wins)))
-    print('Ultra Late win %: {}'.format(len(ultra_late), len(ultra_late_wins)))
+    print('Early win percent: {}%'.format(get_win_percent(len(early), len(early_wins))))
+    print('Mid win percent: {}%'.format(get_win_percent(len(mid), len(mid_wins))))
+    print('Late win percent: {}%'.format(get_win_percent(len(late), len(late_wins))))
+    print('Ultra Late win percent: {}%'.format(get_win_percent(len(ultra_late), len(ultra_late_wins))))

@@ -1,37 +1,11 @@
 '''
-DO NOT USE THIS FILE.
-DEPRECATED.
-To get more data use:
-    scrape_database.py
-'''
-import json
-import requests
-import argparse
-import time
-
-'''
-Descriptions of results:
-    http://sharonkuo.me/dota2/matchdetails.html
-
-API calls:
-    https://dev.dota2.com/showthread.php?t=58317
+The data gets dumped into match_data3.py.
+This is arbitrary. If you decide to get
+more data ask me first. There is a little
+set up to do before you run this script.
 '''
 
-def get_heroes(key, id):
-    data_request = requests.get('http://api.steampowered.com/IEconDOTA2_570/GetHeroes/v1/?key={}'.format(key))
-    hero_dict = data_request.json()
-    for hero in hero_dict['result']['heroes']:
-        if hero['id'] == id:
-            print(hero['name'])
-
-
-def read_file():
-    with open('all_data.json', 'r') as file:
-        d = json.load(file)
-    print(len(d))
-
-
-def set_up(n, key, match_id, invalid_ids):
+def scrape_matches(n, key, match_id, invalid_ids):
     '''
     Use this function to fill the file.
     The file must already contain 1 dictionary.
@@ -71,7 +45,6 @@ def get_match(key, match_id, count):
     https://github.com/psf/requests/blob/master/requests/models.py#L587
     '''
     print('Response {}: {}'.format(count, data_request))
-    # match_data = json.loads(data_request.text)
 
     match_data = data_request.json()
 
@@ -86,7 +59,6 @@ def get_match(key, match_id, count):
             file.write(', ')
             json.dump(match_data, file, indent=4, sort_keys=True)
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--key', help='API key', required=True)
@@ -94,12 +66,5 @@ if __name__ == '__main__':
     match_id = 5000009000
     invalid_ids = 0
     loops = 5000
-    hero_id =
 
-    # get_match_data(args.key)
-
-    # set_up(loops, args.key, match_id, invalid_ids)
-
-    # read_file()
-
-    get_heroes(args.key, hero_id)
+    scrape_matches(loops, args.key, match_id, invalid_ids)

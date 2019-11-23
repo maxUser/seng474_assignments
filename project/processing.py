@@ -169,7 +169,7 @@ def filter_bad_data(data):
 
 if __name__ == '__main__':
     # Collect data
-    raw_data = read_file('all_data.json')
+    raw_data = read_file('all_data_the_remix.json')
 
     # Filter out bad data
     data = filter_bad_data(raw_data)

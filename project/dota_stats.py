@@ -13,9 +13,15 @@ import time
 Descriptions of results:
     http://sharonkuo.me/dota2/matchdetails.html
 
-API calls:
+API calls/things you should know:
     https://dev.dota2.com/showthread.php?t=58317
+
 '''
+
+def get_player_profile(key, steam_id):
+    # steam_id = steamID64
+    data_request = requests.get('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?steamids={}&key={}'.format(steam_id, key))
+    print(data_request.text)
 
 def get_heroes(key, id):
     data_request = requests.get('http://api.steampowered.com/IEconDOTA2_570/GetHeroes/v1/?key={}'.format(key))
@@ -25,11 +31,10 @@ def get_heroes(key, id):
             print(hero['name'])
 
 
-def read_file():
-    with open('all_data.json', 'r') as file:
+def read_file(filename):
+    with open(filename, 'r') as file:
         d = json.load(file)
     print(len(d))
-
 
 def set_up(n, key, match_id, invalid_ids):
     '''
@@ -94,12 +99,16 @@ if __name__ == '__main__':
     match_id = 5000009000
     invalid_ids = 0
     loops = 5000
-    hero_id =
+    hero_id = 1
+    steam_id = '76561198044089924'
+    filename = 'all_data_the_remix.json'
 
     # get_match_data(args.key)
 
     # set_up(loops, args.key, match_id, invalid_ids)
 
-    # read_file()
+    read_file(filename)
 
-    get_heroes(args.key, hero_id)
+    #get_heroes(args.key, hero_id)
+
+    # get_player_profile(args.key, steam_id)

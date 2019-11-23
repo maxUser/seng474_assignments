@@ -42,6 +42,7 @@ def get_match(key, match_id, count):
     '''
     This function appends a comma followed
     by a match dictionary to the json file
+
     '''
 
     data_request = requests.get('https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/v1/?match_id={}&key={}'.format(match_id, key))
@@ -62,12 +63,13 @@ def get_match(key, match_id, count):
     try:
 
         if 'error' in match_data['result'].keys():
-            print(match_data['result']['error'])
+            print('\t{}'.format(match_data['result']['error']))
             return 1
         else:
             with open('match_data3.json', 'a') as file:
                 file.write(', ')
-                json.dump(match_data, file, indent=4, sort_keys=True)
+                json.dump(match_data, file)
+                # json.dump(match_data, file, indent=4, sort_keys=True)
     except KeyError:
         print('KeyError: {}'.format(match_id))
         pass
@@ -76,7 +78,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--key', help='API key', required=True)
     args = parser.parse_args()
-    match_id = 5000012750
+    match_id = 5000012926
     invalid_ids = 0
     loops = 5000
 

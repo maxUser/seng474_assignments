@@ -166,6 +166,65 @@ def filter_bad_data(data):
     '''Filter out data with no win condition'''
     return [match for match in data if 'radiant_win' in match['result'].keys()]
 
+def determine_teams(match):
+    '''Determines which players are on radiant or dire
+
+       return: the player dictionary in a list in a dictionary
+    '''
+    radiant = []
+    dire = []
+
+    for player in match['players']:
+        # print('Player ID: {}'.format(player['hero_id']))
+        if player['player_slot'] <= 4:
+            radiant.append(player)
+        else:
+            dire.append(player)
+
+    return {'radiant_roster': radiant, 'dire_roster': dire}
+
+def calculate_per_min_metrics(team_roster, duration, metric):
+    '''Calculates team per minutes metrics given a team and a metric
+
+       return: total team metric
+    '''
+    metric_total = 0
+
+    for player in team_roster:
+        mps = float(player[metric]) / float(60)
+        metric_total += (mps * duration)
+
+    return metric_total
+
+def team_score(match):
+    '''Return team score as dictionary given a match''''
+    return {'radiant_score': match['radiant_score'], 'dire_score': match['dire_score']}
+
+def get_hero_winrates(data):
+    '''Calculate hero winrates given dataset'''
+    heroes = read_file('heroes.txt')
+
+    winrates = {}
+    for hero in heroes['result']['heroes']:
+        hero_data = filter_by_hero(data, hero['id'])
+        wins = 0
+        for match in hero_data:
+            if did_hero_win_match(match, hero['id']):
+                wins += 1
+
+        winrates[hero['id']] = get_win_percent(len(hero_data), wins)
+
+    return winrates
+
+def calculate_winrate_average(team_roster, winrates):
+    '''Calculates winrate average of given team'''
+    winrate = 0
+
+    for player in team_roster:
+        winrate += winrates[player['hero_id']]
+    return winrate/float(5)
+
+
 
 if __name__ == '__main__':
     # Collect data
@@ -173,23 +232,44 @@ if __name__ == '__main__':
 
     # Filter out bad data
     data = filter_bad_data(raw_data)
-
+    match = data[1192]['result']
     # Check game mode distribution
     # game_mode_stats(data)
 
+    # get hero win rates
+    hero_winrates = get_hero_winrates(data)
+    # print(hero_winrates)
+
+    teams = determine_teams(match)
+    for name, team_roster in teams.items():
+        team_winrate = winrate_average_per_team(team_roster, hero_winrates)
+        print(team_winrate)
+
+
+
+    # Get team metric
+    # teams = determine_teams(match)
+    # for name, team_roster in teams.items():
+    #     a = calculate_per_min_metrics(team_roster, match['duration'], 'xp_per_min')
+    #     print(a)
+
+    # get team score
+    # scores = team_score(match)
+    # print(scores)
+
     # Calculate hero win percentage based on match duration
-    selected_hero = 42
-    hero_data = filter_by_hero(data, selected_hero)
-    print('Total matches for hero: {}'.format(len(hero_data)))
-
-    early, mid, late, ultra_late = extract_duration_data(hero_data)
-
-    early_wins = [match for match in early if did_hero_win_match(match, selected_hero)]
-    mid_wins = [match for match in mid if did_hero_win_match(match, selected_hero)]
-    late_wins = [match for match in late if did_hero_win_match(match, selected_hero)]
-    ultra_late_wins = [match for match in ultra_late if did_hero_win_match(match, selected_hero)]
-
-    print('Early win percent: {}%'.format(get_win_percent(len(early), len(early_wins))))
-    print('Mid win percent: {}%'.format(get_win_percent(len(mid), len(mid_wins))))
-    print('Late win percent: {}%'.format(get_win_percent(len(late), len(late_wins))))
-    print('Ultra Late win percent: {}%'.format(get_win_percent(len(ultra_late), len(ultra_late_wins))))
+    # selected_hero = 42
+    # hero_data = filter_by_hero(data, selected_hero)
+    # print('Total matches for hero: {}'.format(len(hero_data)))
+    #
+    # early, mid, late, ultra_late = extract_duration_data(hero_data)
+    #
+    # early_wins = [match for match in early if did_hero_win_match(match, selected_hero)]
+    # mid_wins = [match for match in mid if did_hero_win_match(match, selected_hero)]
+    # late_wins = [match for match in late if did_hero_win_match(match, selected_hero)]
+    # ultra_late_wins = [match for match in ultra_late if did_hero_win_match(match, selected_hero)]
+    #
+    # print('Early win percent: {}%'.format(get_win_percent(len(early), len(early_wins))))
+    # print('Mid win percent: {}%'.format(get_win_percent(len(mid), len(mid_wins))))
+    # print('Late win percent: {}%'.format(get_win_percent(len(late), len(late_wins))))
+    # print('Ultra Late win percent: {}%'.format(get_win_percent(len(ultra_late), len(ultra_late_wins))))
